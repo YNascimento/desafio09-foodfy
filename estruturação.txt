@@ -22,3 +22,12 @@ Para comunicar com o PostgreSQL, precisa da dependencia: npm install pg
 
 Multer é um middleware do node para lidar com envio de multi-dados de um form. 
 Normalmente usado para fazer upload de vários arquivos: npm install multer
+
+"npm install bcryptjs" biblioteca que faz o hash para senhas
+
+Extensões necessárias para criar sessão de usuário no express
+"npm install express-session" e "npm install connect-pg-simple"
+express-session é pra criar a estrutura e o connect-pg-simple é 
+a extesão para usar o BD em PostgreSQL para armazenas os dados da sessão
+
+"npm install nodemailer" responsável por enviar os emails 

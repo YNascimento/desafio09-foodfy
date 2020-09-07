@@ -19,10 +19,10 @@ module.exports = {
                         ...file,
                         src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
                     }))
-                    return res.render('user/index', {recipes, files: files2})
+                    return res.render('home/index', {recipes, files: files2})
                 }
             }
-            return res.render('user/index', {recipes})
+            return res.render('home/index', {recipes})
  
         })
     },
@@ -57,15 +57,15 @@ module.exports = {
                         ...file,
                         src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
                     }))
-                    return res.render('user/recipes', {recipes, pagination, filter, files: files2})
+                    return res.render('home/recipes', {recipes, pagination, filter, files: files2})
                 }
             }
 
-            return res.render('user/recipes', {recipes,pagination, filter})
+            return res.render('home/recipes', {recipes,pagination, filter})
         })
     },
     about(req,res){
-        return res.render('user/about')
+        return res.render('home/about')
     },
     async show(req, res){
         let results = await Recipe.find(req.params.id)
@@ -83,7 +83,7 @@ module.exports = {
                 ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
             }))
-            return res.render('user/show',{recipe, files})
+            return res.render('home/show',{recipe, files})
         })
     },
     async chefs(req,res){
@@ -97,7 +97,7 @@ module.exports = {
                 ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
             }))
-            return res.render('user/chefs', {chefs, files})
+            return res.render('home/chefs', {chefs, files})
         })
     },
     async busca(req,res){
@@ -128,10 +128,10 @@ module.exports = {
                         ...file,
                         src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
                     }))
-                    return res.render('user/filter', {recipes, pagination, filter, files: files2})
+                    return res.render('home/filter', {recipes, pagination, filter, files: files2})
                 }
             }
-            return res.render('user/filter', {recipes,pagination, filter})
+            return res.render('home/filter', {recipes,pagination, filter})
         })
     }
 }

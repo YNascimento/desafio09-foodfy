@@ -1,9 +1,9 @@
-{% extends "user/layout.njk" %}
+{% extends "home/layout.njk" %}
 
 {% block head %}
     <title>Foodfy - Receitas</title>
-    <link rel="stylesheet" href="/user/recipes.css">
-    <link rel="stylesheet" href="/user/paginate.css">
+    <link rel="stylesheet" href="/home/recipes.css">
+    <link rel="stylesheet" href="/home/paginate.css">
 {% endblock %} 
 
 {% block content %}
@@ -20,6 +20,6 @@
 
     <div class="pagination" data-page={{pagination.page}} data-total={{pagination.total}} data-filter={{filter}}></div>
 
-<script src="/user/paginate.js"></script>
-<script src="/user/recipes.js"></script>
+<script src="/home/paginate.js"></script>
+<script src="/home/recipes.js"></script>
 {% endblock %} 

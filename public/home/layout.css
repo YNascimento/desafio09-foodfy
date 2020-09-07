@@ -49,21 +49,6 @@ body{
     border: 1px solid #cccccc;
 }
 
-.navbar form button{
-    padding: 8px 24px;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 19px;
-    background-color: #6558c3;
-    color: #eee;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.navbar form button:hover{
-    opacity: 0.8;
-}
-
 /********* FOOTER *********/
 
 footer{
