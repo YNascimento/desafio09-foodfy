@@ -16,14 +16,19 @@
 
 </head>
 <body>
+    {% include "messages.njk"%}
+
     <header class="container">
         <aside></aside>
         <nav class="navbar">
             <a href="/"><span class="logo"><img src="/std_imgs/logo2.png" alt=""></span></a>
             <a class="navbar-links" href="/admin/recipes">Receitas</a>
             <a class="navbar-links" href="/admin/chefs">Chefs</a>
-            <a class="navbar-links" href="/admin/chefs">Usuários</a>
-            <a class="navbar-links" href="/admin/users">SAIR</a>
+            <a class="navbar-links" href="/admin/users">Usuários</a>
+            {# <a class="navbar-links" href="/admin/users/logout">SAIR</a> #}
+            <form action="/admin/users/logout" method="post">
+                <button>SAIR</button>
+            </form>
         </nav>
         <aside></aside>
     </header>
@@ -45,4 +50,7 @@
         <p class="footer-text">Todos direitos reservados, receitas Foodfy</p>
     </footer>
 </body>
+
+<script src="/js/validate.js"></script>
+
 </html>

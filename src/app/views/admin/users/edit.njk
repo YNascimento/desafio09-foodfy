@@ -14,9 +14,9 @@
         <div><button class="button delBtn" type="submit">Deletar</button></div>
     </form>
 
-    <form class="create-content" action="/admin/users/{{user.id}}?_method=PUT" method="post">
+    <form class="create-content" action="/admin/users/{{user.id}}/edit?_method=PUT" method="post">
         <section class="header-box">
-            <h3>Editando Chef</h3>
+            <h3>Editando Usuário</h3>
             <div>
                 <input type="hidden" name="id" value={{user.id}}>
                 <button class="button" type="submit">Salvar</button>
@@ -25,6 +25,7 @@
 
         <section class="form-box">
             {% include 'admin/users/create-edit-fields.njk'%}
+            <input type="hidden" name="id" value={{user.id}}>
         </section>
     </form>
 {% endblock %} 

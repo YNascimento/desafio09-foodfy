@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/css/layoutHome.css">
+    <link rel="stylesheet" href="/css/session.css">
     <link rel="stylesheet" href="/css/default.css">
-
     {% block head%}
 
     <title>Foodfy</title>
@@ -24,21 +23,13 @@
             <header>
                 <nav class="navbar">
                     <a href="/"><span class="logo"><img src="/std_imgs/logo.png" alt=""></span></a>
-                    <a class="navbar-links" href="/about">Sobre</a>
-                    <a class="navbar-links" href="/recipes">Receitas</a>
-                    <a class="navbar-links" href="/chefs">Chefs</a>
-                    <a class="navbar-links" href="/admin/users/login">Login</a>
-                    <form action="/recipes/busca" method="GET">
-                        <input type="text" name="filter" placeholder="Buscar uma receita" value="{{filter}}">
-                        <button class="button" type="submit">Buscar</button>
-                    </form>
                 </nav>
             </header>
 
             <main>
-            {% block content %}
+                {% block content %}
 
-            {% endblock %}
+                {% endblock %}
             </main>
         </div>
 
@@ -49,4 +40,7 @@
         <p class="footer-text">Todos direitos reservados, receitas Foodfy</p>
     </footer>
 </body>
+
+<script src="/js/validate.js"></script>
+
 </html>

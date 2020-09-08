@@ -10,7 +10,7 @@
 
 {% block content %}
 
-    <form class="create-content" action="/admin/users" method="post">
+    <form class="create-content" action="/admin/users/{{user.id}}?_method=PUT" method="post">
         <section class="header-box">
             <h3>Bem Vindo {{user.name}}</h3>
             <div>
@@ -20,6 +20,7 @@
 
         <section class="form-box">
             {% include 'admin/users/index-fields.njk'%}
+            <input type="hidden" name="id" value={{user.id}}>
         </section>
     </form>
 

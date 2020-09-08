@@ -13,17 +13,17 @@
     <section class="header-box">
         <h3>Usuários</h3>
         <div>
-            <button class="button" type="submit">Novo</button>
+            <a href="/admin/users/create" class="button">Novo</a>
         </div>
     </section>
 
     <div class="user-cards">
-        {# {% for chef in chefs %} #}
+        {% for user in users %}
         <div class="user-card">
-            <h4>Usuário 1</h4>
-            <small>usuário@usuario.com</small>
+            <h4>{{user.name}}</h4>
+            <small>{{user.email}}</small>
             <div>
-                <a class="userBtn" href="/admin/users/{{chef.id}}/edit">Editar</a>
+                <a class="userBtn" href="/admin/users/{{user.id}}/edit">Editar</a>
                 <form action="/admin/users?_method=DELETE" method="post">
                     <input type="hidden" name="id" value={{user.id}}>
                     <button class="userBtn" type="submit">Remover</button>
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        {# {% endfor %} #}
+        {% endfor %}
     </div>
 
 {% endblock %} 

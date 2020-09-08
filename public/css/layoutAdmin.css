@@ -37,20 +37,29 @@ header{
     align-content: center;
 }
 
-.navbar a:last-child{
+.navbar form{
     justify-self: right;
 }
-.navbar-links{
+.navbar-links, .navbar form button{
     padding-top: 5px;
+    font-size: 15px;
+    line-height: 18px;
     text-decoration: none;
     text-transform: uppercase;
-    color: #eee;
+    color: #999999;
+    background-color: transparent;
     text-align: center;
+    cursor: pointer;
 }
-.navbar-links:hover{
+.navbar-links:hover, .navbar form button:hover{
     font-weight: 700;
+    color: #ffffff;
 }
 
+.active{ 
+    font-weight: 700;
+    color: #ffffff;
+}
 /********* FOOTER *********/
 
 footer{
