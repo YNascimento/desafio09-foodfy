@@ -9,7 +9,7 @@ const homeController = require('../app/controllers/homeController')
 routes.get('/', homeController.index) //index
 routes.get('/recipes', homeController.recipes)//receitas
 routes.get('/about', homeController.about)//sobre
-routes.get('/recipe/:id', homeController.show) //detalhes receita
+routes.get('/recipes/:id', homeController.show) //detalhes receita
 routes.get('/chefs', homeController.chefs)//chefs
 routes.get('/recipes/busca',homeController.busca) //filtro
 

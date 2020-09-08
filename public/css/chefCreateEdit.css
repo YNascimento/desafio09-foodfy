@@ -1,53 +1,47 @@
-.input-box{
-    margin: 24px 0;
-}
-
-.input-title{
-    padding-bottom: 8px;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 19px;
-}
-
-#preparations, #ingredients{
-    display: inline-block;
-    width: 100%;
-    margin: 8px 0;
-
-}
-
-.ingredient, .preparation{
-    margin: 4px 0;
-    position: relative;
-}
-
-.ingredient span, .preparation span{
-    position: absolute;
-    right: 0;
-    top:10px;
-    cursor: pointer;
-}
-
-.input-box button{
+.create-content{
+    box-sizing: border-box;
+    margin: 2% 0;
+    color: #111111;
     background-color: #ffffff;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 19px;
-    color: #6558c3;
-    text-decoration: none;
-    margin: 4px 0;
-    display: block;
-    cursor: pointer;
-    outline: none;
+    margin-bottom: 60px;
 }
 
-.input-box input,.input-box textarea{
-    font-family: 'Roboto', sans-serif;
-    width: 100%;
-    border: 1px solid #dddddd;
-    border-radius: 4px;
-    padding: 8px 4px;
+.create-content section{
+    margin: 2% 0 2%;
+    box-sizing: border-box;
 }
+
+
+.header-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 4%;
+}
+
+.header-box h3{
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.header-box div{
+    justify-self: right;
+}
+
+.delBtn-box{
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 20px 0;
+}
+
+.delBtn-box div{
+    text-align: right;
+}
+
+.delBtn{
+    background-color: #dc4747;
+}
+
+/* FIELDS*/
 
 /* PHOTOS UPLOAD */
 .input-box .photo-box{

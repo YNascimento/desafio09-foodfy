@@ -3,8 +3,7 @@
 {% block head %}
 
     <title>Admin - Editar Receita</title>
-    <link rel="stylesheet" href="/admin/chefs/edit.css">
-    <link rel="stylesheet" href="/admin/chefs/fields.css">
+    <link rel="stylesheet" href="/css/chefCreateEdit.css">
 
 {% endblock %} 
 
@@ -12,7 +11,7 @@
 
     <form class="delBtn-box" action="/admin/chefs?_method=DELETE" method="post">
         <input type="hidden" name="id" value={{chef.id}}>
-        <div><button class="adminBtn delBtn" type="submit">Deletar</button></div>
+        <div><button class="button delBtn" type="submit">Deletar</button></div>
     </form>
 
     <form class="create-content" action="/admin/chefs/{{chef.id}}?_method=PUT" method="post" enctype="multipart/form-data">
@@ -20,7 +19,7 @@
             <h3>Editando Chef</h3>
             <div>
                 <input type="hidden" name="id" value={{chef.id}}>
-                <button class="adminBtn" type="submit">Salvar Chef</button>
+                <button class="button" type="submit">Salvar Chef</button>
             </div>
         </section>
 
@@ -28,5 +27,5 @@
             {% include 'admin/chefs/fields.njk'%}
         </section>
     </form>
-<script src="/admin/chefs/fields.js"></script>
+<script src="/js/admin/chefs/fields.js"></script>
 {% endblock %} 

@@ -3,8 +3,8 @@
 
 {% block head %}
     <title>Foodfy - Admin</title>
-    <link rel="stylesheet" href="/admin/recipes/list.css">
-    <link rel="stylesheet" href="/user/paginate.css">
+    <link rel="stylesheet" href="/css/recipes.css">
+    <link rel="stylesheet" href="/css/paginate.css">
 {% endblock %} 
 
 
@@ -14,17 +14,18 @@
         <div class="header-box">
             <h2>Gerenciar Receitas</h2>
             <div>
-                <a href="/admin/recipes/create" class="adminBtn" type="submit">Criar Receita</a>
+                <a href="/admin/recipes/create" class="button" type="submit">Criar Receita</a>
             </div>
         </div>
         
 
-        <div class="cards">
+        <div class="admin-cards">
             {% for recipe in recipes %}
-            <div class="card">
+            <div class="admin-card">
                 <img src="{{files[loop.index0].src}}" alt="">
                 <div>
                     <h4>{{recipe.title}}</h4>
+                    <small>Por {{chef.name}}</small>
                     <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
                 </div>
             </div>
@@ -35,6 +36,6 @@
 
     </div>
 
-<script src="/user/paginate.js"></script>
+<script src="/js/paginate.js"></script>
 
 {% endblock %} 

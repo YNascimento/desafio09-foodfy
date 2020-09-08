@@ -3,7 +3,7 @@
 {% block head %}
 
     <title>{{recipe.title}}</title>
-    <link rel="stylesheet" href="/admin/recipes/show.css">
+    <link rel="stylesheet" href="/css/show.css">
 
 {% endblock %} 
 
@@ -12,7 +12,7 @@
         <div class="edit-box">
             <h2 class="details-h2">Receita: {{recipe.title}}</h2>
             <div>
-                <a class="adminBtn" href="/admin/recipes/{{recipe.id}}/edit">Editar Receita</a>
+                <a class="button" href="/admin/recipes/{{recipe.id}}/edit">Editar Receita</a>
             </div>
         </div>
 
@@ -63,5 +63,5 @@
         </div>
     </div>
 
-<script src="/admin/recipes/show.js"></script>
+<script src="/js/admin/recipes/show.js"></script>
 {% endblock %} 
