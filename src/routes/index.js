@@ -16,8 +16,12 @@ routes.get('/recipes/busca',homeController.busca) //filtro
 //alias
 routes.get("/admin", function(req,res){res.redirect("/admin/recipes")})
 
-//session
-routes.use('/users',users)
+// Rotas de perfil de um usuário logado
+// routes.get('/admin/profile', ProfileController.index) // Mostrar o formulário com dados do usuário logado
+// routes.put('/admin/profile', ProfileController.put)// Editar o usuário logado
+
+//ADMIN - USERS
+routes.use('/admin/users',users)
 
 //ADMIN - RECIPES
 routes.use('/admin/recipes',recipes)

@@ -33,13 +33,19 @@ header{
 .navbar{
     margin: 20px 0;
     display: grid;
-    grid-template-columns: 150px 80px 80px;
+    grid-template-columns: 150px 80px 80px 80px 1fr;
     align-content: center;
+}
+
+.navbar a:last-child{
+    justify-self: right;
 }
 .navbar-links{
     padding-top: 5px;
     text-decoration: none;
+    text-transform: uppercase;
     color: #eee;
+    text-align: center;
 }
 .navbar-links:hover{
     font-weight: 700;

@@ -1,0 +1,37 @@
+{% extends "admin/layout.njk" %}
+
+{% block head %}
+
+    <title>Admin - Usuários</title>
+    <link rel="stylesheet" href="/css/userCreateEdit.css">
+    <link rel="stylesheet" href="/css/users.css">
+
+{% endblock %} 
+
+{% block content %}
+
+    <section class="header-box">
+        <h3>Usuários</h3>
+        <div>
+            <button class="button" type="submit">Novo</button>
+        </div>
+    </section>
+
+    <div class="user-cards">
+        {# {% for chef in chefs %} #}
+        <div class="user-card">
+            <h4>Usuário 1</h4>
+            <small>usuário@usuario.com</small>
+            <div>
+                <a class="userBtn" href="/admin/users/{{chef.id}}/edit">Editar</a>
+                <form action="/admin/users?_method=DELETE" method="post">
+                    <input type="hidden" name="id" value={{user.id}}>
+                    <button class="userBtn" type="submit">Remover</button>
+                </form>
+            </div>
+        </div>
+
+        {# {% endfor %} #}
+    </div>
+
+{% endblock %} 
