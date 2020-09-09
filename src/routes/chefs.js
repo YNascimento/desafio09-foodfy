@@ -3,6 +3,7 @@ const routes = express.Router()
 const multer = require('../app/middlewares/multer')
 const chefController = require('../app/controllers/chefControler')
 
+
 routes.get("/", chefController.index); // LIST
 routes.get("/create", chefController.create); // CREATE
 routes.get("/:id", chefController.show); // SHOW

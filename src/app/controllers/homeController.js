@@ -4,8 +4,9 @@ const File = require('../models/File')
 
 module.exports = {
     async index(req,res){
-        let results = await Recipe.all()
+        let results = await Recipe.home()
         const recipes = results.rows
+        const userId = req.session.userId
 
         //array de promises para pegar imgs de receitas
         const filePromises = recipes.map(recipe => File.getFilesByRecipe(recipe.id))
@@ -19,14 +20,16 @@ module.exports = {
                         ...file,
                         src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
                     }))
-                    return res.render('home/index', {recipes, files: files2})
+                    return res.render('home/index', {recipes, files: files2,userId})
                 }
             }
-            return res.render('home/index', {recipes})
+            return res.render('home/index', {recipes, userId})
  
         })
     },
     async recipes(req,res){
+
+        const userId = req.session.userId
 
         //pagination prep
         let {filter, page,limit} = req.query
@@ -57,17 +60,21 @@ module.exports = {
                         ...file,
                         src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
                     }))
-                    return res.render('home/recipes', {recipes, pagination, filter, files: files2})
+                    return res.render('home/recipes', {recipes, pagination, filter, files: files2, userId})
                 }
             }
 
-            return res.render('home/recipes', {recipes,pagination, filter})
+            return res.render('home/recipes', {recipes,pagination, filter, userId})
         })
     },
     about(req,res){
-        return res.render('home/about')
+        const userId = req.session.userId
+
+        return res.render('home/about',{userId})
     },
     async show(req, res){
+        const userId = req.session.userId
+
         let results = await Recipe.find(req.params.id)
         const recipe = results.rows[0]
 
@@ -83,10 +90,12 @@ module.exports = {
                 ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
             }))
-            return res.render('home/show',{recipe, files})
+            return res.render('home/show',{recipe, files, userId})
         })
     },
     async chefs(req,res){
+        const userId = req.session.userId
+
         let results = await Chef.all()
         const chefs = results.rows
 
@@ -97,10 +106,12 @@ module.exports = {
                 ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
             }))
-            return res.render('home/chefs', {chefs, files})
+            return res.render('home/chefs', {chefs, files, userId})
         })
     },
     async busca(req,res){
+        const userId = req.session.userId
+
         let {filter, page,limit} = req.query
         page = page || 1
         limit = limit || 3
@@ -112,7 +123,7 @@ module.exports = {
         const recipes = results.rows
 
         const pagination = {
-            total: Math.ceil(recipes[0].total/limit), //total pages
+            total: recipes[0] != null ? Math.ceil(recipes[0].total/limit) : 0, //total pages
             page
         }
         
@@ -128,10 +139,10 @@ module.exports = {
                         ...file,
                         src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
                     }))
-                    return res.render('home/filter', {recipes, pagination, filter, files: files2})
+                    return res.render('home/filter', {recipes, pagination, filter, files: files2,userId})
                 }
             }
-            return res.render('home/filter', {recipes,pagination, filter})
+            return res.render('home/filter', {recipes,pagination, filter, userId})
         })
     }
 }

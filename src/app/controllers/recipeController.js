@@ -3,21 +3,23 @@ const File = require('../models/File')
 const {date} = require('../../lib/util')
 
 module.exports = {
-    async index(req,res){
+    async all(req,res){
+        const isAdmin = req.session.isAdmin
+        const userId = req.session.userId
 
         //pagination prep
-        let {filter, page,limit} = req.query
+        let {filter, page, limit, byUser} = req.query
         page = page || 1
         limit = limit || 6
     
         let offset = limit*(page-1)
-        const params = { filter, page, limit, offset }
+        const params = { filter, page, limit, offset, byUser, userId }
         
         let results = await Recipe.paginate(params)
         const recipes = results.rows
-        
+
         const pagination = {
-            total: Math.ceil(recipes[0].total/limit), //total pages
+            total: recipes[0] != null ? Math.ceil(recipes[0].total/limit) : 0, //total pages
             page
         }
 
@@ -35,24 +37,32 @@ module.exports = {
                         src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
                     }))
 
-                    return res.render('admin/recipes/list', {recipes, pagination, filter, files: files2})
+                    return res.render('admin/recipes/list', {recipes, pagination, filter, files: files2, isAdmin})
                 }
 
-                return res.render('admin/recipes/list', {recipes, pagination, filter})
+                return res.render('admin/recipes/list', {recipes, pagination, filter, isAdmin})
             }
         })
     },
     async create(req,res){
+        const isAdmin = req.session.isAdmin
+
         let results = await Recipe.chefOptions()
         const options = results.rows
 
-        return res.render('admin/recipes/create', {chefOptions : options})
+        return res.render('admin/recipes/create', {chefOptions : options, isAdmin})
     },
     async show(req,res){
+        const isAdmin = req.session.isAdmin
+
         let results = await Recipe.find(req.params.id)
         const recipe = results.rows[0]
 
         if(!recipe) return res.send("Recipe not found")
+
+        let owner = false //check if user created this recipe
+        if(recipe.user_id == req.session.userId) 
+            owner = true
 
         results = await File.getFileIds(recipe.id)
         const fileIds = results.rows
@@ -64,10 +74,12 @@ module.exports = {
                 ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
             }))
-            return res.render('admin/recipes/show',{recipe, files})
+            return res.render('admin/recipes/show',{recipe, files, isAdmin, owner})
         })
     },
     async edit(req,res){
+        const isAdmin = req.session.isAdmin
+
         let results = await Recipe.find(req.params.id)
         const recipe = results.rows[0]
 
@@ -85,21 +97,22 @@ module.exports = {
         }))
 
 
-        return res.render('admin/recipes/edit', {chefOptions : options, recipe, files})
+        return res.render('admin/recipes/edit', {chefOptions : options, recipe, files, isAdmin})
     },
     async post(req,res){
-        
         for(key of Object.keys(req.body)){
             if(req.body[key] == "" && key != "information"){
-                res.send(req.body)
+                return res.send(req.body)
             }
         }
         
         if(req.files.length == 0)
             return res.send('Upload at least one image')
 
+        console.log(req.session.userId)
+
         //insert recipes at recipe table
-        let results = await Recipe.create(req.body)
+        let results = await Recipe.create(req.body, req.session.userId)
         const recipe = results.rows[0]
         const recipeId = recipe.id
 

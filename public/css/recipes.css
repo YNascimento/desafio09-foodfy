@@ -18,8 +18,14 @@
 }
 
 .header-box div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-self: right;
     align-self: center;
+}
+.header-box div a{
+    text-align: center;
+    margin-left: 2%;
 }
 
 .content-box h2{

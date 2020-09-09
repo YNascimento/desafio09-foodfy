@@ -2,21 +2,25 @@ const User = require("../models/User")
 const crypto = require('crypto')
 const {hash} = require('bcryptjs')
 const mailer = require('../../lib/mailer')
-
+const {adminLogged} = require('../middlewares/session')
 
 module.exports = {
     async list(req,res){
+        const isAdmin = req.session.isAdmin
+
         const users = await User.all()
-        return res.render('admin/users/list', {users})
+        return res.render('admin/users/list', {users, isAdmin})
     },
     createForm(req,res){
-        return res.render('admin/users/create')
+        const isAdmin = req.session.isAdmin
+
+        return res.render('admin/users/create',{isAdmin})
     },
-    async adminCreate(req,res){
+    async create(req,res){
         const user = req.body
         
-        // user.password = crypto.randomBytes(8).toString("hex")
-        user.password = "123"
+        user.password = crypto.randomBytes(8).toString("hex")
+        // user.password = "123"
 
         //enviar email com senha gerada
         await mailer.sendMail({
@@ -36,10 +40,12 @@ module.exports = {
 
         await User.create(user)
         let users = await User.all()
-        return res.render('admin/users/list', {users ,success: "Cadastro feito com sucesso!"})
+        return res.render('admin/users/list', {users, success: "Cadastro feito com sucesso!"})
     },
     indexForm(req,res){
-        return res.render('admin/users/index', {user : req.user})
+        const isAdmin = req.session.isAdmin
+        
+        return res.render('admin/users/index', {user : req.user, isAdmin})
     },
     async indexUpdate(req,res){
         const user = req.user
@@ -53,11 +59,13 @@ module.exports = {
         })
     },
     async editForm(req,res){
+        const isAdmin = req.session.isAdmin
+
         let id = req.params.id
         let results = await User.find({ where: {id} })
         const user = results
 
-        return res.render('admin/users/edit', {user})
+        return res.render('admin/users/edit', {user, isAdmin})
     },
     async adminUpdate(req,res){
         const id = req.params.id
@@ -73,12 +81,25 @@ module.exports = {
     async delete(req,res){
 
         const id = req.body.id
-        await User.delete(id)
+        const userId = req.session.userId
 
-        const users = await User.all()
-        return res.render('admin/users/list', {
-            users,
-            success: "Usuário Excluido com sucesso!"
-        })
+        const user = await User.find({where: {id}})
+        if(user.id != userId){ //check if user to be delete aren't themselves
+            await User.delete(id)
+    
+            const users = await User.all()
+            return res.render('admin/users/list', {
+                users,
+                success: "Usuário Excluido com sucesso!"
+            })
+        }
+        else{
+            const users = await User.all()
+            return res.render('admin/users/list', {
+                users,
+                error: "Não é possível excluir a si mesmo."
+            })
+        }
+
     }
 }

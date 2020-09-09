@@ -13,7 +13,7 @@ function checkFields(body){
 }
 
 module.exports = {
-    async adminCreate(req,res,next){
+    async create(req,res,next){
 
         //check if fields filled
         const isFieldsFilled = checkFields(req.body)
@@ -45,20 +45,18 @@ module.exports = {
         next()
     },
     async indexForm(req,res,next){
-        let id = req.params.id
+        let id = req.session.userId
 
         let results = await User.find({
             where:{id}
         })
         const user = results
-
-        if(!user) return res.render('session/login', {error: "Acesso não permitido."})
         req.user = user
+        if(!user) return res.render('session/login', {error: "Acesso não permitido."})
         next()
     },
     async indexUpdate(req,res,next){
-        const {id} = req.params
-
+        const id = req.session.userId
 
         //check if fields filled
         const isFieldsFilled = checkFields(req.body)
@@ -66,26 +64,19 @@ module.exports = {
             return res.render("admin/users/index", isFieldsFilled)
         
         const {password} = req.body
-        if(!password) {
-            console.log('if !password')
-            return res.render("admin/users/index", {
+        if(!password) return res.render("admin/users/index", {
                 user: req.body, 
                 error:"Coloque sua senha para atualizar seu cadastro"
             })
-        }
 
         const user = await User.find({ where: {id} })
         
         const samePassword = await compare(password, user.password)
         // if(password == "b23a2eecb056c82a") samePassword=true
-        if(!samePassword) {
-            console.log('if !samePassword')
-
-            return res.render('admin/users/index', {
-            user:req.body,
-            error: "Senha incorreta!"
+        if(!samePassword) return res.render('admin/users/index', {
+                user:req.body,
+                error: "Senha incorreta!"
             })
-        }
 
         req.user = user
         next()

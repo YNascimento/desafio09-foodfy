@@ -4,7 +4,7 @@ const {date} = require('../../lib/util')
 const { off } = require('../../config/db')
 
 module.exports = {
-    all(){
+    home(){
         try {
             return db.query(`SELECT recipes.*, chefs.name as chef_name FROM recipes 
             LEFT JOIN chefs ON (recipes.chef_id = chefs.id) order by created_at LIMIT 6`)
@@ -12,7 +12,9 @@ module.exports = {
             console.error(err)
         }
     },
-    async create(data){
+    async create(data, userId){
+        console.log(userId)
+
         const query = `
             INSERT INTO recipes (
                 chef_id,
@@ -20,8 +22,9 @@ module.exports = {
                 ingredients,
                 preparation,
                 information,
-                created_at
-            ) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id`
+                created_at,
+                user_id
+            ) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING id`
 
         const values = [
             data.chef,
@@ -29,7 +32,8 @@ module.exports = {
             data.ingredients,
             data.preparation,
             data.information,
-            date(Date.now()).iso
+            date(Date.now()).iso,
+            userId
         ]
 
         try {
@@ -93,7 +97,7 @@ module.exports = {
         }
     },
     async paginate(params){
-        const {filter, offset, limit, isBusca} = params
+        const {filter, offset, limit, isBusca, byUser, userId} = params
 
         let query = "",
         filterQuery = "",
@@ -103,10 +107,16 @@ module.exports = {
         if(filter){
             filterQuery = ` WHERE recipes.title ILIKE '%${filter}%'`
             totalQuery = `(SELECT count(*) FROM recipes ${filterQuery}) AS total`
+            
+            if(byUser) filterQuery = ` WHERE recipes.title ILIKE '%${filter}%' AND recipes.user_id = ${userId}`
         }
 
-        if(isBusca) orderQuery = "ORDER BY updated_at DESC"
-        else orderQuery = "ORDER BY created_at DESC"
+        if(byUser && filterQuery == ""){
+            filterQuery = `WHERE recipes.user_id = ${userId}`
+        }
+
+        if(isBusca) orderQuery = "ORDER BY recipes.updated_at DESC"
+        else orderQuery = "ORDER BY recipes.created_at DESC"
         
         query = `SELECT recipes.*, ${totalQuery}, chefs.name AS chef_name
             FROM recipes LEFT JOIN chefs ON (recipes.chef_id = chefs.id)

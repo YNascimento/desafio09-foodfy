@@ -13,7 +13,9 @@
         <div class="header-box">
             <h2>Gerenciar Chefs</h2>
             <div>
-                <a href="/admin/chefs/create" class="button" type="submit">Criar Chef</a>
+                {% if isAdmin %}
+                    <a href="/admin/chefs/create" class="button" type="submit">Criar Chef</a>
+                {% endif %}
             </div>
         </div>
 

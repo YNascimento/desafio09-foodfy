@@ -12,7 +12,9 @@
         <div class="edit-box">
             <h2 class="details-h2">Receita: {{recipe.title}}</h2>
             <div>
+                {% if isAdmin or owner %}
                 <a class="button" href="/admin/recipes/{{recipe.id}}/edit">Editar Receita</a>
+                {% endif %}
             </div>
         </div>
 

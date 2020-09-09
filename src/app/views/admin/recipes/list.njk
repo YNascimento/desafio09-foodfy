@@ -14,7 +14,9 @@
         <div class="header-box">
             <h2>Gerenciar Receitas</h2>
             <div>
-                <a href="/admin/recipes/create" class="button" type="submit">Criar Receita</a>
+                <a href="/admin/recipes/myrecipes?byUser=true" class="button">Minhas Receitas</a>
+                <a href="/admin/recipes/create" class="button" >Criar Receita</a>
+                <input type="hidden" name="byUser">
             </div>
         </div>
         
@@ -37,5 +39,6 @@
     </div>
 
 <script src="/js/paginate.js"></script>
+<script src="/js/admin/recipes/byUser.js"></script>
 
 {% endblock %} 

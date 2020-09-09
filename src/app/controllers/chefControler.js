@@ -1,9 +1,12 @@
 const Chef = require('../models/Chef')
 const File = require('../models/File')
 const {date} = require('../../lib/util')
+const {adminLogged} = require('../middlewares/session')
 
 module.exports = {
     async index(req,res){
+        const isAdmin = req.session.isAdmin
+
         let results = await Chef.all()
         const chefs = results.rows
         
@@ -14,14 +17,18 @@ module.exports = {
                 ...file,
                 src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
             }))
-            return res.render('admin/chefs/list', {chefs, files})
+            return res.render('admin/chefs/list', {chefs, files, isAdmin})
         })
 
     },
     create(req,res){
-        return res.render('admin/chefs/create')
+        const isAdmin = req.session.isAdmin
+
+        return res.render('admin/chefs/create', isAdmin)
     },
     async show(req,res){
+        const isAdmin = req.session.isAdmin
+
         let results = await Chef.find(req.params.id)
         const chef = results.rows[0]
 
@@ -63,14 +70,15 @@ module.exports = {
                         src: `${req.protocol}://${req.headers.host}${file.path.replace('public','')}`
                     }))
 
-                    return res.render('admin/chefs/show',{chef, recipes, pagination, total_recipes, chefFile, recipeFiles : files2})
+                    return res.render('admin/chefs/show',{chef, recipes, pagination, total_recipes, chefFile, recipeFiles : files2, isAdmin})
                 }
             }
-            return res.render('admin/chefs/show',{chef, recipes, total_recipes, chefFile})
+            return res.render('admin/chefs/show',{chef, recipes, total_recipes, chefFile, isAdmin})
 
         })
     },
     async edit(req,res){
+        const isAdmin = req.session.isAdmin
         
         let results = await Chef.find(req.params.id)
         const chef = results.rows[0]
@@ -81,7 +89,7 @@ module.exports = {
         const chefFile = results
         chefFile.src = `${req.protocol}://${req.headers.host}${chefFile.path.replace('public','')}`
 
-        return res.render('admin/chefs/edit',{chef, chefFile})
+        return res.render('admin/chefs/edit',{chef, chefFile, isAdmin})
     },
     async post(req,res){
         for(key of Object.keys(req.body)){

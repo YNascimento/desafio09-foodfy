@@ -1,6 +1,6 @@
 const User = require("../models/User")
 const {compare} = require('bcryptjs')
-const { reset } = require("browser-sync")
+const {onlyUsers, isAdmin, isLogged} = require('../middlewares/session')
 
 module.exports = {
     async login(req,res,next){
@@ -18,8 +18,9 @@ module.exports = {
             user: req.body,
             error: "Senha incorreta!"
         })
-        
         req.user = user
+        
+        isAdmin(req, res, user, next)
         next()
     },
     async forgot(req,res,next){
@@ -65,6 +66,13 @@ module.exports = {
         })
 
         req.user = user 
+        next()
+    },
+    onlyAdmin(req,res,next){
+        if(!req.session.isAdmin){
+            return res.render('admin/layout',{ error:"Acesso Negado!" })
+        }
+
         next()
     }
 }

@@ -24,10 +24,13 @@
             <a href="/"><span class="logo"><img src="/std_imgs/logo2.png" alt=""></span></a>
             <a class="navbar-links" href="/admin/recipes">Receitas</a>
             <a class="navbar-links" href="/admin/chefs">Chefs</a>
+            {% if isAdmin %}
             <a class="navbar-links" href="/admin/users">Usuários</a>
-            {# <a class="navbar-links" href="/admin/users/logout">SAIR</a> #}
+            {% else %}
+            <a class="navbar-links" href="/admin/users/profile">Perfil</a>
+            {% endif %}
             <form action="/admin/users/logout" method="post">
-                <button>SAIR</button>
+                <button type="submit">SAIR</button>
             </form>
         </nav>
         <aside></aside>

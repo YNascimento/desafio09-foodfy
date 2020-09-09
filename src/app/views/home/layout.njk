@@ -27,7 +27,11 @@
                     <a class="navbar-links" href="/about">Sobre</a>
                     <a class="navbar-links" href="/recipes">Receitas</a>
                     <a class="navbar-links" href="/chefs">Chefs</a>
-                    <a class="navbar-links" href="/admin/users/login">Login</a>
+                    {% if userId %}
+                        <a class="navbar-links" href="/admin/users/login">Minha Conta</a>
+                    {% else %}
+                        <a class="navbar-links" href="/admin/users/login">Login</a>
+                    {% endif %}
                     <form action="/recipes/busca" method="GET">
                         <input type="text" name="filter" placeholder="Buscar uma receita" value="{{filter}}">
                         <button class="button" type="submit">Buscar</button>
