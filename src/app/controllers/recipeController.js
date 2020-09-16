@@ -109,7 +109,10 @@ module.exports = {
         if(req.files.length == 0)
             return res.send('Upload at least one image')
 
-        console.log(req.session.userId)
+        console.log(req.body)
+        console.log(req.body.preparation)
+        console.log(req.body.ingredients)
+        console.log(req.body.information)
 
         //insert recipes at recipe table
         let results = await Recipe.create(req.body, req.session.userId)
